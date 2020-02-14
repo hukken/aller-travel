@@ -1,0 +1,443 @@
+@charset "UTF-8";
+@font-face {
+	font-family: 'Moderat';
+	src: url('../fonts/moderat/Moderat-Regular.eot');
+	src: url('../fonts/moderat/Moderat-Regular.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/moderat/Moderat-Regular.woff2') format('woff2'),
+		url('../fonts/moderat/Moderat-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Moderat';
+	src: url('../fonts/moderat/Moderat-Bold.eot');
+	src: url('../fonts/moderat/Moderat-Bold.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/moderat/Moderat-Bold.woff2') format('woff2'),
+		url('../fonts/moderat/Moderat-Bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Moderat';
+	src: url('../fonts/moderat/Moderat-Regular-Italic.eot');
+	src: url('../fonts/moderat/Moderat-Regular-Italic.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/moderat/Moderat-Regular-Italic.woff2') format('woff2'),
+		url('../fonts/moderat/Moderat-Regular-Italic.woff') format('woff');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'allertravel';
+	src: url('../fonts/allertravel.eot?60j77x');
+	src: url('../fonts/allertravel.eot?60j77x#iefix') format('embedded-opentype'),
+		url('../fonts/allertravel.ttf?60j77x') format('truetype'),
+		url('../fonts/allertravel.woff?60j77x') format('woff'),
+		url('../fonts/allertravel.svg?60j77x#allertravel') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Travelize-v9';
+	src: url('../fonts/travelize-v9.eot?jwrrjl');
+	src: url('../fonts/travelize-v9.eot?jwrrjl#iefix') format('embedded-opentype'),
+		url('../fonts/travelize-v9.ttf?jwrrjl') format('truetype'),
+		url('../fonts/travelize-v9.woff?jwrrjl') format('woff'),
+		url('../fonts/travelize-v9.svg?jwrrjl#allertravel') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+body {
+	font-family: 'Moderat', sans-serif;
+	text-rendering: optimizeLegibility;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+}
+
+[class^='aticon-'],
+[class*=' aticon-'] {
+	font-family: 'allertravel' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #ff273f;
+}
+
+.aticon-car:before {
+	content: '\E914';
+}
+.aticon-walking:before {
+	content: '\E91C';
+}
+.aticon-rain:before {
+	content: '\E91E';
+}
+.aticon-sun:before {
+	content: '\E91F';
+}
+.aticon-temp:before {
+	content: '\E920';
+}
+
+.weather-table,
+.poi-table {
+	padding: 1em;
+}
+.weather-data,
+.poi-data {
+	display: flex;
+	flex: 0 0 auto;
+}
+.weather-data .chart,
+.poi-data .chart {
+	display: block;
+	height: 100%;
+	flex: 1 1 auto;
+}
+
+.weather-group,
+.weather-header {
+	display: flex;
+	width: 100%;
+}
+.weather-header {
+	margin-bottom: 0.5em;
+}
+.weather-header .weather-data {
+	position: relative;
+	align-items: center;
+}
+.weather-group {
+	margin-bottom: 0.5em;
+	height: 2em;
+}
+.weather-month {
+	font-weight: 600;
+	flex: 0 0 7em;
+	text-transform: uppercase;
+}
+.weather-data {
+	margin-left: 1em;
+	flex: 2;
+}
+.weather-data span {
+	display: block;
+	margin-top: 0.1em;
+	margin-right: 0.25em;
+	width: 1.5em;
+}
+.weather-data .chart {
+	width: calc(100% - (1.5em + 0.25em));
+}
+.weather-data.temp span::after {
+	content: '\B0';
+}
+.weather-header .weather-data.temp {
+	color: #8c123d;
+}
+.weather-header .weather-data.rain {
+	color: #25455d;
+}
+.weather-header .weather-data.sun {
+	color: #eca50a;
+}
+.weather-bar {
+	stroke-width: 5;
+	stroke-linecap: round;
+}
+
+.bar-temp {
+	stroke: #8c123d;
+}
+
+.bar-rain {
+	stroke: #25455d;
+}
+
+.bar-sun {
+	stroke: #eca50a;
+}
+
+.weather-header h4 {
+	margin: 0;
+	text-align: center;
+}
+
+.aticon-walking,
+.aticon-car {
+	font-size: 1.6em;
+}
+.aticon-temp,
+.aticon-sun,
+.aticon-rain {
+	font-size: 3em;
+}
+.aticon-sun,
+.aticon-rain {
+	margin: 0 0.15em;
+}
+.aticon-walking,
+.aticon-temp {
+	color: #8c123d;
+}
+.aticon-car,
+.aticon-rain {
+	color: #25455d;
+}
+.aticon-sun {
+	color: #eca50a;
+}
+
+.poi-group {
+	display: flex;
+}
+.poi-name {
+	flex: 0 0 7em;
+}
+.poi-data {
+	flex: 1 1 100%;
+}
+
+.poi-data .line {
+	stroke-width: 2;
+	stroke-linecap: square;
+}
+.poi-data[data-type='car'] .line {
+	stroke: #25455d;
+}
+.poi-data[data-type='car'] .aticon {
+	fill: #25455d;
+}
+.poi-data[data-type='car'] span {
+	color: #25455d;
+}
+.poi-data[data-type='walk'] .line {
+	stroke: #8c123d;
+}
+.poi-data[data-type='walk'] .aticon {
+	fill: #8c123d;
+}
+.poi-data[data-type='walk'] span {
+	color: #8c123d;
+}
+.poi-data .chart {
+	width: calc(100% - 6em);
+}
+
+.poi-data {
+	position: relative;
+	height: 2em;
+}
+.poi-data .aticon-walking,
+.poi-data .aticon-car {
+	position: relative;
+	top: 0.2em;
+}
+.poi-data .aticon-car {
+	margin-right: 0.2em;
+}
+
+.poi-data span {
+	position: absolute;
+	margin-left: 0.5em;
+	width: 6em;
+	margin-top: -0.5em;
+}
+
+.temp-table {
+	border: none;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+.temp-table .temp-data,
+.temp-table .temp-city {
+	padding: 0.75em 1em;
+	white-space: nowrap;
+}
+.temp-table .temp-data {
+	text-align: right;
+}
+.temp-table .temp-city {
+	position: absolute;
+	top: auto;
+	left: 0;
+	width: 7.5em;
+}
+.temp-wrapper {
+	position: relative;
+}
+.temp-scroller {
+	margin-left: 8.5em;
+	overflow-x: scroll;
+	overflow-y: visible;
+	padding-bottom: 0.5em;
+	width: calc(100% - 8.5em);
+}
+
+.facilities {
+	width: 8.5em;
+	text-align: center;
+}
+.facilities-container {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+.facilities-code {
+	width: 40em;
+}
+.facilities-code textarea {
+	width: 32em;
+	height: 18em;
+	padding: 1em;
+	margin-bottom: 3em;
+}
+.facilities-title {
+	font-weight: bold;
+	font-size: 1em;
+}
+.facilities-icon {
+	display: block;
+}
+.facilities-icon-container {
+	position: relative;
+	width: 75%;
+	margin: 0 auto;
+}
+.facilities-icon-container:before {
+	display: block;
+	content: '';
+	width: 100%;
+	padding-top: 100%;
+}
+.facilities-icon {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.flight {
+	padding: 1.5em 2.5em 2em 2.5em;
+	margin-bottom: 3em;
+}
+.flight-to {
+	background: #ecf7f6;
+}
+.flight-from {
+	background: #fff1ee;
+}
+.flight-title {
+	line-height: 1.2;
+	color: #8c123d;
+	margin: 2em 0 1em;
+}
+.flight-title::before {
+	display: inline-block;
+	direction: ltr;
+	font-family: 'travelize-v9' !important;
+	font-size: 1.75em;
+	font-style: normal !important;
+	font-variant: normal;
+	font-weight: normal;
+	letter-spacing: normal;
+	line-height: 0.6;
+	margin-right: 0.25em;
+	speak: none;
+	text-transform: none;
+	vertical-align: middle;
+	white-space: nowrap;
+	word-wrap: normal;
+}
+.flight-departure::before {
+	content: '\E922';
+}
+.flight-arrival::before {
+	content: '\E921';
+}
+.flight-info dt,
+.flight-info dd {
+	display: inline-block;
+}
+.flight-info dt {
+	font-weight: 600;
+	color: #8c123d;
+}
+.flight-info dd {
+	margin: 0 2em 0 0.5em;
+}
+.flight-notes {
+	padding: 0 0 0 1em;
+	margin: 0 0 0 0.2em;
+	list-style-type: disc;
+	list-style-position: outside;
+}
+.flight-notes li {
+	padding: 0 0 0.5em 0;
+}
+
+@media only screen and (max-width: 1000px) {
+	.temp-header .temp-data {
+		position: relative;
+	}
+	.temp-header .temp-data span {
+		display: none;
+	}
+	.temp-header .temp-data::before {
+		display: block;
+		top: 0;
+		left: 0;
+		text-indent: 0;
+		content: attr(data-abbr);
+	}
+}
+@media only screen and (max-width: 599px) {
+	.weather-data .chart {
+		margin-top: -0.25em;
+	}
+
+	.weather-data {
+		flex-direction: column;
+		align-items: center;
+	}
+	.weather-data span {
+		display: inline-block;
+		width: auto;
+	}
+
+	.weather-bar,
+	.secondary-bar {
+		stroke-width: 2;
+	}
+
+	.secondary-bar {
+		stroke-linecap: round;
+		stroke: #f0f0f0;
+	}
+
+	.weather-header h4 {
+		order: 2;
+		margin-bottom: 0.5em;
+	}
+
+	.weather-month {
+		position: relative;
+		text-indent: -99999em;
+		flex: 2.5em;
+	}
+	.weather-month::before {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		text-indent: 0;
+		content: attr(data-abbr);
+		width: 2.5em;
+	}
+}

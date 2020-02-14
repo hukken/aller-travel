@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>POI-table</title>
+        <link rel="stylesheet" media="all" href="css/main.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/alasql/0.2/alasql.min.js"></script>
+        <script src="scripts/scripts.js"></script>
+        <script src="scripts/main.js"></script>
+        <style>
+            .the-code pre {
+                height:60vh;
+                width: 60vw;
+                display: block;
+                padding: .75em;
+                word-break: break-all;
+                word-wrap: break-word;
+                background-color: #f5f5f5;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                color: #5a5a5a;
+                margin-bottom: 1.5em;
+                line-height: 1em;
+                white-space: pre;
+                overflow-x: auto;
+                box-sizing: border-box;
+            }
+            .the-code .poi-view-code {
+                width: 60vw;
+                height:auto;
+                margin-top: 20px;
+            }
+            .menu {
+            }
+            .menu ul {
+                padding: 0;
+                margin: 0;
+                position: relative;
+
+            }
+            .menu li {
+                display: inline-block;
+                font-size: 24px;
+                padding: 20px;
+                cursor: pointer;
+
+            }
+            .poi-cont, .temp-cont, .weather-cont, .facilities-cont, .airtravel-cont {
+                box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+                padding: 20px;
+            }
+            .menu-poi {
+                background: lightgrey;
+            }
+            .weather-cont, .temp-cont, .facilities-cont, .airtravel-cont{
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="menu">
+            <ul>
+                <li class="menu-poi">POI</li>
+                <li class="menu-weather">Vær</li>
+                <li class="menu-temp">Temp</li>
+                <li class="menu-facilities">Fasiliteter</li>
+                <li class="menu-airtravel">Flyreisen</li>
+            </ul>
+        </div>
+        <div class="poi-cont">
+            <h1>Tabell-generator: POI</h1>
+            <h2>Last opp Excel-fil:</h2>
+            <input id="files-poi" name="files-poi" type="file" />
+            <input type="submit" id="poi-submit" value="Generer">
+            <div class="the-code" style="display: none;">
+                <h2>HTML-kode:</h2>
+                <pre id="inject-poi-here">
+                </pre>
+                <button id="copy-poi-code" data-clipboard-target="#inject-poi-here">Kopier HTML</button>
+                <div class="poi-view-code"></div>
+            </div>
+        </div>
+        <div class="weather-cont">
+            <h1>Tabell-generator: Vær</h1>
+            <h2>Last opp Excel-fil:</h2>
+            <input id="files-weather" type="file" />
+            <div class="the-code" style="display: none;">
+                <h2>HTML-kode:</h2>
+                <pre id="inject-weather-here">
+                </pre>
+                <button id="copy-weather-code" data-clipboard-target="#inject-weather-here">Kopier HTML</button>
+                <div class="weather-view-code"></div>
+            </div>
+        </div>
+        <div class="temp-cont">
+            <h1>Tabell-generator: Temperatur</h1>
+            <h2>Last opp Excel-fil:</h2>
+            <input id="files-temp" type="file" />
+            <div class="the-code" style="display: none;">
+                <h2>HTML-kode:</h2>
+                <pre id="inject-temp-here">
+                </pre>
+                <button id="copy-temp-code" data-clipboard-target="#inject-temp-here">Kopier HTML</button>
+                <div class="temp-view-code"></div>
+            </div>
+        </div>
+        <div class="facilities-cont">
+            <h1>Fasiliteter</h1>
+            <div class="container" style="max-width: 100%;">
+                <h2>Oversikt</h2>
+                <div class="facilities-container">                    
+                    <!-- Flat-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/01-flat.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Flat
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Flat SLUTT -->
+    
+                    <!-- Kupert-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/02-kupert.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Kupert
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Kupert SLUTT -->
+    
+                    <!-- Havutsikt-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/03-havutsikt.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Havutsikt
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Havutsikt SLUTT -->
+    
+                    <!-- Strand-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/04-strand.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Strand
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Strand SLUTT -->
+    
+                    <!-- Svømmebasseng-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/05-svoemmebasseng.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Svømmebasseng
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Svømmebasseng SLUTT -->
+    
+                    <!-- Balkong-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/06-balkong.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Balkong
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Balkong SLUTT -->
+    
+                    <!-- Sol-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/07-sol.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Sol
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Sol SLUTT -->
+    
+                    <!-- Byvandring-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/08-byvandring.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Byvandring
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Byvandring SLUTT -->
+    
+                    <!-- Elvecruise-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/09-elvecruise.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Elvecruise
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Elvecruise SLUTT -->
+    
+                    <!-- Guide-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/10-guide.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Guide
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Guide SLUTT -->
+    
+                    <!-- Dyne-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/11-dyne.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Dyne
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Dyne SLUTT -->
+    
+                    <!-- TV-kanal-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/12-tvkanal.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            TV-kanal
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- TV-kanal SLUTT -->
+    
+                    <!-- TV-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/13-tv.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            TV
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- TV SLUTT -->
+    
+                    <!-- Safe-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/14-safe.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Safe
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Safe SLUTT -->
+    
+                    <!-- Oppvaskmaskin-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/15-oppvaskmaskin.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Oppvaskmaskin
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Oppvaskmaskin SLUTT -->
+    
+                    <!-- Vaskemaskin-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/16-vaskemaskin.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Vaskemaskin
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Vaskemaskin SLUTT -->
+    
+                    <!-- Hårføner-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/17-harfoner.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Hårføner
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Hårføner SLUTT -->
+    
+                    <!-- Gåtur-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/18-gaatur.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Gåtur
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Gåtur SLUTT -->
+    
+                    <!-- Strykejern-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/19-strykejern.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Strykejern
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Strykejern SLUTT -->
+    
+                    <!-- Kjøkkenutstyr-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/20-kjokkenutstyr.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Kjøkkenutstyr
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Kjøkkenutstyr SLUTT -->
+    
+                    <!-- Oppvarming-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/21-oppvarming.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Oppvarming
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Oppvarming SLUTT -->
+    
+                    <!-- Wi-fi-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/22-wifi.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Wi-fi
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Wi-fi SLUTT -->
+    
+                    <!-- Rullator-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/23-rullator.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Rullator
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Rullator SLUTT -->
+    
+                    <!-- Spa-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/24-spa.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Spa
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Spa SLUTT -->
+    
+                    <!-- Matvandring-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/25-matvandring.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Matvandring
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Matvandring SLUTT -->
+    
+                    <!-- Trening-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/26-trening.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Trening
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Trening SLUTT -->
+    
+                    <!-- Måltid-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/27-maaltid.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Måltid
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Måltid SLUTT -->
+    
+                    <!-- Spill-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/28-spill.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Spill
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Spill SLUTT -->
+    
+                    <!-- Hotellrestaurant-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/29-hotellrest.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Hotellrestaurant
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Hotellrestaurant SLUTT -->
+    
+                    <!-- Kunst &amp; kultur-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/30-kunstkultur.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Kunst &amp; kultur
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Kunst &amp; kultur SLUTT -->
+    
+                    <!-- Vin &amp; øl-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/31-vin-oel.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Vin &amp; øl
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Vin &amp; øl SLUTT -->
+    
+                    <!-- Utflukter-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/32-utflukter.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Utflukter
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Utflukter SLUTT -->
+    
+                    <!-- Musikk-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/33-musikk.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Musikk
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Musikk SLUTT -->
+    
+                    <!-- Teater-ikon START -->
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/34-teater.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            <!-- TITTEL start -->
+                            Teater
+                            <!-- TITTEL slutt -->
+                        </h3>
+                    </div>
+                    <!-- Teater SLUTT -->
+                </div>
+            </div>
+            <h2>HTML</h2>
+            <div class="facilities-container facilities-code">
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/01-flat.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Flat
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Flat START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 01-flat.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Flat
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Flat SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/02-kupert.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Kupert
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Kupert START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 02-kupert.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Kupert
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Kupert SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/03-havutsikt.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Havutsikt
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Havutsikt START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 03-havutsikt.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Havutsikt
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Havutsikt SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/04-strand.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Strand
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Strand START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 04-strand.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Strand
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Strand SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/05-svoemmebasseng.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Svømmebasseng
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Svømmebasseng START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 05-svoemmebasseng.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Svømmebasseng
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Svømmebasseng SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/06-balkong.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Balkong
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Balkong START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 06-balkong.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Balkong
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Balkong SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/07-sol.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Sol
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Sol START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 07-sol.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Sol
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Sol SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/08-byvandring.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Byvandring
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Byvandring START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 08-byvandring.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Byvandring
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Byvandring SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/09-elvecruise.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Elvecruise
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Elvecruise START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 09-elvecruise.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Elvecruise
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Elvecruise SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/10-guide.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Guide
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Guide START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 10-guide.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Guide
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Guide SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/11-dyne.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Dyne
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Dyne START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 11-dyne.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Dyne
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Dyne SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/12-tvkanal.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            TV-kanal
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- TV-kanal START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 12-tvkanal.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                TV-kanal
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- TV-kanal SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/13-tv.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            TV
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- TV START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 13-tv.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                TV
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- TV SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/14-safe.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Safe
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Safe START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 14-safe.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Safe
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Safe SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/15-oppvaskmaskin.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Oppvaskmaskin
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Oppvaskmaskin START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 15-oppvaskmaskin.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Oppvaskmaskin
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Oppvaskmaskin SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/16-vaskemaskin.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Vaskemaskin
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Vaskemaskin START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 16-vaskemaskin.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Vaskemaskin
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Vaskemaskin SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/17-harfoner.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Hårføner
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Hårføner START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 17-harfoner.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Hårføner
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Hårføner SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/18-gaatur.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Gåtur
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Gåtur START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 18-gaatur.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Gåtur
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Gåtur SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/19-strykejern.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Strykejern
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Strykejern START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 19-strykejern.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Strykejern
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Strykejern SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/20-kjokkenutstyr.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Kjøkkenutstyr
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Kjøkkenutstyr START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 20-kjokkenutstyr.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Kjøkkenutstyr
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Kjøkkenutstyr SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/21-oppvarming.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Oppvarming
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Oppvarming START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 21-oppvarming.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Oppvarming
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Oppvarming SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/22-wifi.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Wi-fi
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Wi-fi START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 22-wifi.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Wi-fi
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Wi-fi SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/23-rullator.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Rullator
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Rullator START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 23-rullator.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Rullator
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Rullator SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/24-spa.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Spa
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Spa START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 24-spa.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Spa
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Spa SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/25-matvandring.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Matvandring
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Matvandring START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 25-matvandring.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Matvandring
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Matvandring SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/26-trening.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Trening
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Trening START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 26-trening.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Trening
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Trening SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/27-maaltid.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Måltid
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Måltid START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 27-maaltid.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Måltid
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Måltid SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/28-spill.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Spill
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Spill START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 28-spill.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Spill
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Spill SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/29-hotellrest.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Hotellrestaurant
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Hotellrestaurant START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 29-hotellrest.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Hotellrestaurant
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Hotellrestaurant SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/30-kunstkultur.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Kunst &amp; kultur
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Kunst &amp; kultur START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 30-kunstkultur.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Kunst &amp; kultur
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Kunst &amp; kultur SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/31-vin-oel.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Vin &amp; øl
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Vin &amp; øl START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 31-vin-oel.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Vin &amp; øl
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Vin &amp; øl SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/32-utflukter.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Utflukter
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Utflukter START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 32-utflukter.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Utflukter
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Utflukter SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/33-musikk.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Musikk
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Musikk START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 33-musikk.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Musikk
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Musikk SLUTT --&gt;</textarea
+                    >
+    
+                    <div class="facilities">
+                        <div class="facilities-icon-container">
+                            <img
+                                src="https://allertest.travelize24.com/upload/images/01_NY/icons/34-teater.svg"
+                                class="facilities-icon"
+                            />
+                        </div>
+                        <h3 class="facilities-title">
+                            Teater
+                        </h3>
+                    </div>
+                    <textarea>
+    &lt;!-- Teater START --&gt; 
+          &lt;div class=&quot;facilities&quot;&gt;
+            &lt;div class=&quot;facilities-icon-container&quot;&gt;
+              &lt;img src=&quot;https://allertest.travelize24.com/upload/images/01_NY/icons/ 34-teater.svg &quot; class=&quot;facilities-icon&quot;&gt;
+            &lt;/div&gt;
+            &lt;h3 class=&quot;facilities-title&quot;&gt;
+              &lt;!-- TITTEL start --&gt; 
+                Teater
+              &lt;!-- TITTEL slutt --&gt;
+            &lt;/h3&gt;
+          &lt;/div&gt; 
+        &lt;!-- Teater SLUTT --&gt;</textarea
+                    >
+                </div>
+        </div>
+        <div class="airtravel-cont">
+            <h1>Flyreisen</h1>
+            <div class="container" style="max-width: 100%;">
+                <div class="flight flight-to">
+                    <h3 class="flight-main-title">
+                        <!-- Tittel på reise til destinasjon -->
+                        Turen til Alicante (direkte)
+                        <!-- slutt tittel -->
+                    </h3>
+                    <dl class="flight-info">
+                        <dt>Varighet</dt>
+                        <dd>ca. 3 timer</dd>
+                        <dt>Flyselskap</dt>
+                        <dd>Norwegian</dd>
+                    </dl>
+                    <h4 class="flight-title flight-departure">Avreise</h4>
+                    <ul class="flight-notes">
+                        <li>Avgang fra Oslo, Bergen, eller Stavanger.</li>
+                        <li>Møt opp senest 3 timer før avgang</li>
+                        <li>Spør besetningen dersom du trenger assistanse</li>
+                    </ul>
+                    <h4 class="flight-title flight-arrival">Ankomst</h4>
+                    <ul class="flight-notes">
+                        <li>Avgang fra Oslo, Bergen, eller Stavanger.</li>
+                        <li>Møt opp senest 3 timer før avgang</li>
+                        <li>Spør besetningen dersom du trenger assistanse</li>
+                    </ul>
+                </div>
+                <div class="flight flight-from">
+                    <h3 class="flight-main-title">
+                        <!-- Tittel på reise tilbake -->
+                        Turen hjem igjen
+                        <!-- slutt tittel -->
+                    </h3>
+                    <dl class="flight-info">
+                        <dt>Varighet</dt>
+                        <dd>ca. 3 timer</dd>
+                        <dt>Flyselskap</dt>
+                        <dd>Norwegian</dd>
+                    </dl>
+                    <h4 class="flight-title flight-departure">Avreise</h4>
+                    <ul class="flight-notes">
+                        <li>Avgang fra Oslo, Bergen, eller Stavanger.</li>
+                        <li>Møt opp senest 3 timer før avgang</li>
+                        <li>Spør besetningen dersom du trenger assistanse</li>
+                    </ul>
+                    <h4 class="flight-title flight-arrival">Ankomst</h4>
+                    <ul class="flight-notes">
+                        <li>Avgang fra Oslo, Bergen, eller Stavanger.</li>
+                        <li>Møt opp senest 3 timer før avgang</li>
+                        <li>Spør besetningen dersom du trenger assistanse</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="scripts/generatorScript.js"></script>
+    </body>
+</html>
