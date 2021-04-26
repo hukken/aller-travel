@@ -1,32 +1,5 @@
 @charset "UTF-8";
 @font-face {
-	font-family: 'Moderat';
-	src: url('../fonts/moderat/Moderat-Regular.eot');
-	src: url('../fonts/moderat/Moderat-Regular.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/moderat/Moderat-Regular.woff2') format('woff2'),
-		url('../fonts/moderat/Moderat-Regular.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'Moderat';
-	src: url('../fonts/moderat/Moderat-Bold.eot');
-	src: url('../fonts/moderat/Moderat-Bold.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/moderat/Moderat-Bold.woff2') format('woff2'),
-		url('../fonts/moderat/Moderat-Bold.woff') format('woff');
-	font-weight: bold;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'Moderat';
-	src: url('../fonts/moderat/Moderat-Regular-Italic.eot');
-	src: url('../fonts/moderat/Moderat-Regular-Italic.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/moderat/Moderat-Regular-Italic.woff2') format('woff2'),
-		url('../fonts/moderat/Moderat-Regular-Italic.woff') format('woff');
-	font-weight: normal;
-	font-style: italic;
-}
-@font-face {
 	font-family: 'allertravel';
 	src: url('../fonts/allertravel.eot?60j77x');
 	src: url('../fonts/allertravel.eot?60j77x#iefix') format('embedded-opentype'),
@@ -47,7 +20,7 @@
 	font-style: normal;
 }
 body {
-	font-family: 'Moderat', sans-serif;
+	font-family: 'allertravel', sans-serif;
 	text-rendering: optimizeLegibility;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;

@@ -26,9 +26,10 @@ function handleFile(e,type) {
                 var output = "<div class='poi-table'>\n";
 
                 for(var i = 0, len = result.length; i < len; i++) {
+                  const distance = result[i]['Avstand']
                     output += "\t<div class='poi-group'>\n";
                     output += "\t\t<div class='poi-name'>" + result[i]['Hva'] + "</div>\n";
-                    output += "\t\t<div class='poi-data' data-type='" + result[i]['Type'] + "' data-value='" + result[i]['Avstand'] + "'>\n";
+                    output += "\t\t<div class='poi-data' data-type='" + result[i]['Type'] + "' data-value='" + (distance > 50 ? 50 : distance) + "'>\n";
                     output += "\t\t\t<span>\n";
 
                     if (result[i]['Type'] === 'walk') {
@@ -37,7 +38,7 @@ function handleFile(e,type) {
                         output += "\t\t\t\t<i class='aticon-" + result[i]['Type'] + " aria-hidden='true'></i>\n"
                     }
                     
-                    output += "\t\t\t\t" + result[i]['Avstand'] + " min\n";
+                    output += "\t\t\t\t" + distance + " min\n";
 
                     output += "\t\t\t</span>\n";
                     output += "\t\t</div>\n";
